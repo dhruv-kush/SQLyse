@@ -1,0 +1,33 @@
+# Agent/tool workspace
+.agents/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache/build files
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Environment secrets
+.env
+**/.env
+
+# Runtime databases and logs
+*.db
+*.db-*
+*.log
+
+# Generated test reports
+test-report.pdf
+test-report.json
+test-report.csv
+
+# Editors / operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

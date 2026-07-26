@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SQLyse application security scanner interface">
+  <title>SQLyse â€” Application Security Scanner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js?v=api-integration-1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to dashboard</a>
+
+  <header class="mobile-header">
+    <a class="mobile-brand" href="#dashboard" aria-label="SQLyse dashboard home">
+      <span class="brand-mark" aria-hidden="true">S</span>
+      <span>SQLyse</span>
+    </a>
+    <button class="mobile-menu-button" id="mobileMenuButton" type="button" aria-controls="primarySidebar" aria-expanded="false" aria-label="Open navigation">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
+    </button>
+  </header>
+
+  <aside class="sidebar" id="primarySidebar" aria-label="Primary navigation">
+    <div class="sidebar-header">
+      <a class="sidebar-brand" href="#dashboard" aria-label="SQLyse dashboard home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span class="brand-name">SQLyse</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-controls="primarySidebar" aria-expanded="false" aria-label="Expand navigation">
+        <svg class="toggle-chevron" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m9 6 6 6-6 6"/>
+        </svg>
+        <svg class="toggle-close" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="primary-nav" aria-label="Product sections">
+      <ul>
+        <li class="nav-item is-active">
+          <a class="nav-link" href="#dashboard" aria-current="page" aria-label="Dashboard">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 13h6V4H4v9Zm10 7h6V11h-6v9ZM4 20h6v-3H4v3Zm10-13h6V4h-6v3Z"/>
+            </svg>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#learn-sqli" aria-label="Learn SQL injection">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11a3 3 0 0 1 3 3v15a3 3 0 0 0-3-3H4V5.5Z"/>
+              <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H14v18a3 3 0 0 1 3-3h3V5.5Z"/>
+            </svg>
+            <span class="nav-label">Learn SQLi</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about-sqlyse" aria-label="About SQLyse">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 11v5m0-8h.01"/>
+            </svg>
+            <span class="nav-label">About SQLyse</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact" aria-label="Contact">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="9" cy="8" r="3"/>
+              <path d="M3.5 19v-1.5A4.5 4.5 0 0 1 8 13h2a4.5 4.5 0 0 1 4.5 4.5V19M16 5.5a3 3 0 0 1 0 5.8M17 13a4.5 4.5 0 0 1 3.5 4.4V19"/>
+            </svg>
+            <span class="nav-label">Contact</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-foot" aria-hidden="true">
+      <span class="status-dot"></span>
+      <span class="sidebar-foot-label">SYSTEM READY</span>
+    </div>
+  </aside>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+
+  <main class="app-shell" id="main-content">
+    <section class="hero" id="dashboard" aria-labelledby="product-heading">
+      <div class="hero-copy">
+        <p class="eyebrow">Application Security Scanner</p>
+        <h1 id="product-heading">Analyze inputs.<br>Expose injection risks.</h1>
+        <p class="hero-description">SQLyse crawls web applications, discovers user-controlled inputs and transforms suspicious response behaviour into clear, actionable security findings.</p>
+
+        <div class="scan-stack">
+          <section class="scan-target" aria-labelledby="scan-target-heading">
+            <h2 id="scan-target-heading">Scan Target</h2>
+            <form id="scanForm" novalidate>
+              <label for="targetUrl">Target URL</label>
+              <div class="scan-control" id="scanControl">
+                <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m9.5 14.5 5-5M7.2 16.8l-1.1 1.1a3.54 3.54 0 0 1-5-5l3-3a3.54 3.54 0 0 1 5 0M16.8 7.2l1.1-1.1a3.54 3.54 0 0 1 5 5l-3 3a3.54 3.54 0 0 1-5 0"/>
+                </svg>
+                <input id="targetUrl" name="targetUrl" type="url" inputmode="url" autocomplete="url" placeholder="Enter a website URL" spellcheck="false" aria-describedby="urlError">
+                <button class="scan-button" id="scanButton" type="submit">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 2v4m0 12v4M2 12h4m12 0h4M5 5l2.5 2.5M16.5 16.5 19 19M19 5l-2.5 2.5M7.5 16.5 5 19"/>
+                  </svg>
+                  <span id="scanButtonLabel">SCAN</span>
+                </button>
+              </div>
+              <p class="form-error" id="urlError" role="alert" aria-live="polite"></p>
+              <p class="scan-target-status" id="scanTargetStatus" role="status" aria-live="polite" hidden></p>
+            </form>
+          </section>
+        </div>
+      </div>
+
+      <div class="visual-column" aria-hidden="true">
+        <figure class="shield-scene" id="shieldScene">
+          <div class="shield-layer shield-left" id="leftShield">
+            <img src="assets/shields/left_shield.png" alt="" draggable="false">
+          </div>
+          <div class="shield-layer shield-right" id="rightShield">
+            <img src="assets/shields/right_shield.png" alt="" draggable="false">
+          </div>
+          <div class="shield-layer shield-middle" id="middleShield">
+            <img src="assets/shields/middle_shield.png" alt="" draggable="false">
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="workflow" id="scanWorkflow" aria-label="Scan dashboard workflow" hidden>
+      <div class="workflow-shell">
+        <div class="monitoring-grid" id="monitoringGrid">
+          <section class="scan-progress workflow-panel" id="scanProgress" aria-labelledby="scan-progress-heading" aria-live="polite">
+            <div class="progress-heading-row">
+              <div>
+                <p class="component-kicker">Active scan</p>
+                <h2 id="scan-progress-heading">Scan Progress</h2>
+              </div>
+              <span class="progress-percent" id="progressPercent">0%</span>
+            </div>
+
+            <div class="current-phase-row">
+              <span>Current phase</span>
+              <strong class="progress-stage" id="progressStage">INITIALIZING</strong>
+            </div>
+
+            <div class="progress-meta">
+              <div>
+                <span>Elapsed time</span>
+                <strong id="elapsedTime">00:00</strong>
+              </div>
+              <div class="progress-target-meta">
+                <span>Current target</span>
+                <strong id="currentTarget">â€”</strong>
+              </div>
+            </div>
+
+            <div class="progress-track" id="progressTrack" role="progressbar" aria-label="Scan progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="progress-fill" id="progressFill">
+                <span class="progress-spark" aria-hidden="true"></span>
+              </div>
+            </div>
+
+            <ol class="phase-list" id="phaseList" aria-label="Scan phases"></ol>
+
+            <div class="progress-actions">
+              <p class="scan-state-message" id="scanStateMessage" role="status"></p>
+              <button class="secondary-button cancel-button" id="cancelScanButton" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="7" y="7" width="10" height="10" rx="1"/>
+                </svg>
+                Cancel Scan
+              </button>
+            </div>
+          </section>
+
+          <section class="live-activity workflow-panel" aria-labelledby="activity-heading">
+            <div class="panel-heading-row">
+              <div>
+                <p class="component-kicker">Event stream</p>
+                <h2 id="activity-heading">Live Scan Activity</h2>
+              </div>
+              <button class="text-action" id="copyLogsButton" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="8" y="8" width="11" height="11" rx="2"/>
+                  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+                </svg>
+                Copy Logs
+              </button>
+            </div>
+            <div class="activity-log" id="activityLog" role="log" aria-live="polite" aria-relevant="additions">
+              <p class="activity-empty" id="activityEmpty">Waiting for scan activityâ€¦</p>
+            </div>
+          </section>
+        </div>
+
+        <section class="scan-error-panel" id="scanErrorPanel" aria-labelledby="scan-error-heading" role="alert" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v6m0 4h.01"/>
+          </svg>
+          <div>
+            <h2 id="scan-error-heading">The scan could not be completed</h2>
+            <p id="scanErrorMessage">The backend scan encountered an unexpected error.</p>
+          </div>
+          <button class="secondary-button" id="retryScanButton" type="button">Retry</button>
+        </section>
+
+        <div class="completion-content" id="completionContent" hidden>
+          <div class="mock-notice" role="note">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 11v5m0-8h.01"/>
+            </svg>
+            <p><strong>Review findings carefully.</strong> Automated scan results require human verification and should only be generated for systems you are authorised to test.</p>
+          </div>
+
+          <section class="dashboard-section reveal-section" id="scanOverview" aria-labelledby="overview-heading">
+            <div class="section-heading-row">
+              <div>
+                <p class="component-kicker">Completed scan</p>
+                <h2 id="overview-heading">Scan Overview</h2>
+              </div>
+              <span class="scan-id" id="scanId">â€”</span>
+            </div>
+            <div class="metrics-grid" id="overviewMetrics"></div>
+          </section>
+
+          <section class="dashboard-section findings-section reveal-section" id="findingsSection" aria-labelledby="findings-heading">
+            <div class="section-heading-row findings-heading-row">
+              <div>
+                <p class="component-kicker">Assessment output</p>
+                <h2 id="findings-heading">Security Findings</h2>
+              </div>
+              <span class="finding-count" id="findingCount">0 findings</span>
+            </div>
+
+            <div class="findings-toolbar" id="findingsToolbar">
+              <label class="filter-field search-field" for="findingSearch">
+                <span>Search findings</span>
+                <span class="filter-input-wrap">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="m16 16 4 4"/>
+                  </svg>
+                  <input id="findingSearch" type="search" placeholder="Search finding, endpoint or parameter">
+                </span>
+              </label>
+
+              <label class="filter-field" for="severityFilter">
+                <span>Severity</span>
+                <select id="severityFilter">
+                  <option value="all">All severities</option>
+                  <option value="Informational">Informational</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </label>
+
+              <label class="filter-field" for="statusFilter">
+                <span>Status</span>
+                <select id="statusFilter">
+                  <option value="all">All statuses</option>
+                  <option value="Requires review">Requires review</option>
+                  <option value="Reviewed">Reviewed</option>
+                </select>
+              </label>
+
+              <button class="secondary-button toolbar-export" id="filteredExportButton" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14"/>
+                </svg>
+                Export
+              </button>
+            </div>
+
+            <div class="findings-table-wrap" id="findingsTableWrap">
+              <table class="findings-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Finding</th>
+                    <th scope="col">Endpoint</th>
+                    <th scope="col">Parameter</th>
+                    <th scope="col">Detection</th>
+                    <th scope="col">Severity</th>
+                    <th scope="col">Confidence</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="findingsTableBody"></tbody>
+              </table>
+            </div>
+
+            <div class="filtered-empty" id="filteredEmpty" role="status" hidden>
+              <p>No findings match the selected filters.</p>
+              <button class="text-action" id="clearFiltersButton" type="button">Clear filters</button>
+            </div>
+
+            <div class="no-findings-state" id="noFindingsState" role="status" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3 4 6v5c0 5 3.2 8.5 8 10 4.8-1.5 8-5 8-10V6l-8-3Z"/>
+                <path d="m8.5 12 2.2 2.2 4.8-5"/>
+              </svg>
+              <h3>No suspicious SQL injection behaviour was detected.</h3>
+              <p>The completed scan did not produce findings that require review.</p>
+            </div>
+          </section>
+
+          <section class="analysis-grid reveal-section" id="analysisGrid" aria-label="Finding analysis and remediation">
+            <article class="analysis-panel">
+              <p class="component-kicker">Selected finding</p>
+              <h2>Security Analysis</h2>
+              <p class="analysis-finding-title" id="analysisFindingTitle">â€”</p>
+              <p class="analysis-copy" id="analysisCopy"></p>
+              <p class="verification-note" id="verificationNote"></p>
+            </article>
+
+            <article class="remediation-panel">
+              <p class="component-kicker">Defensive guidance</p>
+              <h2>Recommended Remediation</h2>
+              <ul class="remediation-list" id="remediationList"></ul>
+            </article>
+          </section>
+
+          <section class="report-section reveal-section" aria-labelledby="report-heading">
+            <div>
+              <p class="component-kicker">Scan record</p>
+              <h2 id="report-heading">Report &amp; Export</h2>
+              <p>Download the completed scan reports or return to the target control for another scan.</p>
+            </div>
+            <div class="report-actions">
+              <button class="secondary-button" id="downloadPdfButton" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6V3Zm9 0v5h4M9 13h6M9 17h4"/></svg>
+                Download PDF
+              </button>
+              <button class="secondary-button" id="exportJsonButton" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H5v16h3M16 4h3v16h-3M11 8l-2 4 2 4m2-8 2 4-2 4"/></svg>
+                Export JSON
+              </button>
+              <button class="secondary-button" id="exportCsvButton" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4V5Zm0 5h16M9 5v14m6-14v14"/></svg>
+                Export CSV
+              </button>
+              <button class="secondary-button" id="copySummaryButton" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+                Copy Summary
+              </button>
+              <button class="primary-action-button" id="newScanButton" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/></svg>
+                Start New Scan
+              </button>
+            </div>
+            <p class="report-feedback" id="reportFeedback" role="status" aria-live="polite"></p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section learn-section" id="learn-sqli" aria-labelledby="learn-heading">
+      <div class="content-shell">
+        <header class="content-intro content-reveal">
+          <p class="eyebrow">SQL Injection Fundamentals</p>
+          <h2 id="learn-heading">Understand the weakness<br>behind unsafe queries.</h2>
+          <p>SQL injection can occur when untrusted input influences a database query. Understanding how this behaviour appears helps developers identify risky query construction and apply stronger defensive controls.</p>
+        </header>
+
+        <div class="learn-foundations content-reveal">
+          <article class="editorial-block">
+            <p class="section-index" aria-hidden="true">01</p>
+            <div>
+              <h3>What is SQL Injection?</h3>
+              <p>SQL injection is a class of vulnerability in which untrusted input can alter the intended structure or behaviour of a database query. The weakness is created by unsafe query construction, not by the input alone.</p>
+            </div>
+          </article>
+
+          <article class="query-flow-block">
+            <div class="subsection-heading">
+              <p class="section-index" aria-hidden="true">02</p>
+              <div>
+                <h3>How It Happens</h3>
+                <p>Risk increases when applications combine values directly with query text, handle input inconsistently or connect with excessive database privileges.</p>
+              </div>
+            </div>
+            <div class="query-flow" role="img" aria-label="Data flow from user input through the application query and database to the response">
+              <span>User Input</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+              <span>Application Query</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+              <span>Database</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+              <span>Response</span>
+            </div>
+          </article>
+        </div>
+
+        <section class="learn-detail content-reveal" aria-labelledby="categories-heading">
+          <div class="subsection-copy">
+            <p class="section-index" aria-hidden="true">03</p>
+            <h3 id="categories-heading">Common Categories</h3>
+            <p>Different response patterns can suggest that input is influencing a query. Each signal requires careful verification.</p>
+          </div>
+          <div class="category-list">
+            <article>
+              <span>01</span>
+              <h4>Error-based behaviour</h4>
+              <p>Database-related error patterns may appear when an application processes unexpected input.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h4>Boolean-response differences</h4>
+              <p>Controlled input variations may produce repeatable differences in content or application flow.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h4>Time-based behaviour</h4>
+              <p>Consistent timing changes may indicate backend query influence, but latency must be ruled out.</p>
+            </article>
+            <article>
+              <span>04</span>
+              <h4>Union/query-structure manipulation</h4>
+              <p>Unexpected result shapes may suggest that input is affecting the structure of a data request.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="impact-section content-reveal" aria-labelledby="impact-heading">
+          <div class="subsection-copy">
+            <p class="section-index" aria-hidden="true">04</p>
+            <h3 id="impact-heading">Potential Impact</h3>
+            <p>If a weakness is confirmed, the resulting impact depends on application design, database permissions and exposed data.</p>
+          </div>
+          <ul class="impact-list">
+            <li>Authentication controls may be bypassed</li>
+            <li>Data could be accessed without authorisation</li>
+            <li>Stored information may be modified</li>
+            <li>Records could be lost or made unavailable</li>
+            <li>Database structure may be exposed</li>
+            <li>Broader application compromise could become possible</li>
+          </ul>
+        </section>
+
+        <section class="defensive-section content-reveal" aria-labelledby="defensive-heading">
+          <div class="defensive-intro">
+            <p class="section-index" aria-hidden="true">05</p>
+            <p class="component-kicker">Primary defence</p>
+            <h3 id="defensive-heading">Defensive Controls</h3>
+            <p>Layered controls reduce the chance that untrusted values can change query intent and limit the impact if a defect reaches production.</p>
+          </div>
+          <div class="control-list">
+            <article><h4>Parameterised queries</h4><p>Keep SQL command text separate from values supplied by users.</p></article>
+            <article><h4>Prepared statements</h4><p>Define query structure first and bind each value through the database driver.</p></article>
+            <article><h4>Server-side validation</h4><p>Enforce expected types, lengths and formats before data reaches the query layer.</p></article>
+            <article><h4>Generic error handling</h4><p>Store detailed failures in protected logs and return neutral messages to clients.</p></article>
+            <article><h4>Least-privilege accounts</h4><p>Give application database identities only the operations and records they require.</p></article>
+            <article><h4>Security regression testing</h4><p>Continuously verify query boundaries and unusual input throughout delivery.</p></article>
+            <article><h4>Secure framework or ORM usage</h4><p>Use safe binding APIs correctly and review any raw-query escape hatches.</p></article>
+          </div>
+        </section>
+
+        <section class="query-comparison content-reveal" aria-labelledby="comparison-heading">
+          <div class="subsection-heading comparison-heading">
+            <p class="section-index" aria-hidden="true">06</p>
+            <div>
+              <h3 id="comparison-heading">Vulnerable vs Safer Query Construction</h3>
+              <p>Conceptual pseudocode illustrates the trust boundary without providing an attack sequence.</p>
+            </div>
+          </div>
+          <div class="comparison-grid">
+            <article class="comparison-panel is-unsafe">
+              <span class="comparison-label">Unsafe concept</span>
+              <p>Query text is assembled directly using a user-controlled value.</p>
+              <pre><code>queryText = concatenate(
+  queryStructure, userControlledValue)</code></pre>
+            </article>
+            <article class="comparison-panel is-safer">
+              <span class="comparison-label">Safer concept</span>
+              <p>SQL structure remains fixed while the value is passed separately as a parameter.</p>
+              <pre><code>queryText = fixedStructure
+boundValues = [userControlledValue]</code></pre>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="content-section about-section" id="about-sqlyse" aria-labelledby="about-heading">
+      <div class="content-shell">
+        <header class="content-intro content-reveal">
+          <p class="eyebrow">About the Product</p>
+          <h2 id="about-heading">From target input<br>to actionable findings.</h2>
+          <p>SQLyse brings crawling, input discovery, response analysis and security reporting into one focused interface.</p>
+        </header>
+
+        <section class="product-purpose content-reveal" aria-labelledby="purpose-heading">
+          <div class="subsection-copy">
+            <p class="section-index" aria-hidden="true">01</p>
+            <h3 id="purpose-heading">What SQLyse Does</h3>
+            <p>SQLyse is designed to organise a controlled application-security review. Detection is evidence-led and potential findings remain subject to human verification.</p>
+          </div>
+          <ul class="purpose-list">
+            <li>Accept a target URL</li>
+            <li>Crawl reachable application pages</li>
+            <li>Discover forms and input parameters</li>
+            <li>Send controlled test inputs</li>
+            <li>Compare application responses</li>
+            <li>Detect suspicious SQL-related behaviour</li>
+            <li>Organise potential findings</li>
+            <li>Provide remediation guidance</li>
+            <li>Generate reports</li>
+          </ul>
+        </section>
+
+        <section class="scanner-workflow content-reveal" aria-labelledby="scanner-workflow-heading">
+          <div class="subsection-heading">
+            <p class="section-index" aria-hidden="true">02</p>
+            <div>
+              <h3 id="scanner-workflow-heading">Scanner Workflow</h3>
+              <p>A single review path carries target context from initial discovery into a reportable finding record.</p>
+            </div>
+          </div>
+          <ol class="workflow-timeline" aria-label="SQLyse scanner workflow">
+            <li>
+              <span class="timeline-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3"/></svg></span>
+              <strong>Target</strong><p>Validate the application URL and establish scan context.</p>
+            </li>
+            <li>
+              <span class="timeline-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h6v6H5V5Zm8 8h6v6h-6v-6ZM11 8h4a2 2 0 0 1 2 2v3M8 11v4a2 2 0 0 0 2 2h3"/></svg></span>
+              <strong>Crawl</strong><p>Follow reachable routes within the permitted target scope.</p>
+            </li>
+            <li>
+              <span class="timeline-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4V5Zm4 4h8M8 13h5M8 17h3"/></svg></span>
+              <strong>Discover</strong><p>Identify forms, parameters and other user-controlled inputs.</p>
+            </li>
+            <li>
+              <span class="timeline-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 12h3m4 0h9M4 17h7m4 0h5"/><circle cx="16" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="13" cy="17" r="2"/></svg></span>
+              <strong>Test</strong><p>Apply controlled variations without destructive probe behaviour.</p>
+            </li>
+            <li>
+              <span class="timeline-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17V7m5 10v-4m5 4V9m5 8V5M3 20h18"/></svg></span>
+              <strong>Analyze</strong><p>Compare status, length, timing and sanitised response signals.</p>
+            </li>
+            <li>
+              <span class="timeline-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6V3Zm9 0v5h4M9 13h6M9 17h4"/></svg></span>
+              <strong>Report</strong><p>Organise cautious findings, evidence and remediation guidance.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="capabilities-section content-reveal" aria-labelledby="capabilities-heading">
+          <div class="subsection-copy">
+            <p class="section-index" aria-hidden="true">03</p>
+            <h3 id="capabilities-heading">Core Capabilities</h3>
+            <p>The interface is structured around the evidence and review tasks needed during a focused SQL injection assessment.</p>
+          </div>
+          <div class="capability-list">
+            <article><span>01</span><h4>Application crawling</h4><p>Map reachable routes within the defined target boundary.</p></article>
+            <article><span>02</span><h4>Form and parameter discovery</h4><p>Record the inputs that may influence server-side behaviour.</p></article>
+            <article><span>03</span><h4>Response comparison</h4><p>Evaluate controlled variations across safe response metadata.</p></article>
+            <article><span>04</span><h4>SQL error-family detection</h4><p>Group sanitised database error patterns for review.</p></article>
+            <article><span>05</span><h4>Severity classification</h4><p>Prioritise potential findings using evidence and confidence.</p></article>
+            <article><span>06</span><h4>Finding review</h4><p>Preserve technical context and human verification status.</p></article>
+            <article><span>07</span><h4>Remediation guidance</h4><p>Connect observed behaviour with concise defensive controls.</p></article>
+            <article><span>08</span><h4>JSON, CSV and PDF reporting</h4><p>Generate structured exports through the connected backend report service.</p></article>
+          </div>
+        </section>
+
+        <section class="architecture-section content-reveal" aria-labelledby="architecture-heading">
+          <div class="subsection-heading">
+            <p class="section-index" aria-hidden="true">04</p>
+            <div>
+              <p class="component-kicker">Integration Architecture</p>
+              <h3 id="architecture-heading">Architecture</h3>
+              <p>The frontend communicates with the Flask API, which coordinates scanning, analysis, findings and report generation.</p>
+            </div>
+          </div>
+          <div class="architecture-flow" role="img" aria-label="Integration architecture from Frontend to Flask API, Crawler, Scanner, Response Analyzer, Finding Generator and Report Service">
+            <span class="architecture-node">Frontend</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+            <span class="architecture-node">Flask API</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+            <span class="architecture-node">Crawler</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+            <span class="architecture-node">Scanner</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+            <span class="architecture-node">Response Analyzer</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+            <span class="architecture-node">Finding Generator</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+            <span class="architecture-node">Report Service</span>
+          </div>
+        </section>
+
+        <section class="limitations-section content-reveal" aria-labelledby="limitations-heading">
+          <div class="subsection-copy">
+            <p class="section-index" aria-hidden="true">05</p>
+            <h3 id="limitations-heading">Scope and Limitations</h3>
+            <p>Automated signals support investigation; they do not replace secure engineering review or authorised manual validation.</p>
+          </div>
+          <ul class="limitations-list">
+            <li><strong>Human review remains essential.</strong><span>Potential findings require technical verification before classification.</span></li>
+            <li><strong>No finding is not proof of security.</strong><span>Coverage limits and application behaviour can leave weaknesses undetected.</span></li>
+            <li><strong>Application access affects coverage.</strong><span>Dynamic and authenticated areas may require future session support.</span></li>
+            <li><strong>Response differences need context.</strong><span>Normal application branching can produce false-positive signals.</span></li>
+            <li><strong>Permission defines the boundary.</strong><span>SQLyse should only assess systems the operator is authorised to test.</span></li>
+          </ul>
+        </section>
+      </div>
+    </section>
+
+    <section class="content-section contact-section" id="contact" aria-labelledby="contact-heading">
+      <div class="content-shell">
+        <header class="content-intro content-reveal">
+          <p class="eyebrow">Team &amp; Contact</p>
+          <h2 id="contact-heading">Built by people who care<br>about secure software.</h2>
+          <p>SQLyse is shaped across interface design, scanner engineering and security analysis. Contact details remain intentionally editable as the team profile is finalised.</p>
+        </header>
+
+        <div class="team-grid content-reveal" id="teamGrid" aria-label="SQLyse team"></div>
+
+        <section class="project-contact content-reveal" aria-labelledby="project-contact-heading">
+          <div>
+            <p class="component-kicker">Project channels</p>
+            <h3 id="project-contact-heading">General Project Contact</h3>
+            <p>Repository and project email details can be connected when their public destinations are available.</p>
+          </div>
+          <div class="project-contact-actions" id="projectContactActions"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-shell">
+      <div class="footer-brand-block">
+        <a class="footer-brand" href="#dashboard" aria-label="SQLyse dashboard home">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span>SQLyse</span>
+        </a>
+        <p>Application-security scanning and response analysis in one focused workflow.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#learn-sqli">Learn SQLi</a>
+        <a href="#about-sqlyse">About SQLyse</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="footer-meta">
+        <div id="footerGithub"></div>
+        <p><span id="currentYear"></span> Â· SQLyse</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="finding-backdrop" id="findingBackdrop" hidden></div>
+  <aside class="finding-drawer" id="findingDrawer" role="dialog" aria-modal="true" aria-labelledby="detailTitle" aria-hidden="true" tabindex="-1" hidden>
+    <header class="detail-header">
+      <div>
+        <p class="component-kicker">Finding details</p>
+        <h2 id="detailTitle">Finding</h2>
+        <div class="detail-badges">
+          <span class="severity-badge" id="detailSeverity">â€”</span>
+          <span class="detail-confidence" id="detailConfidence">â€”</span>
+          <span class="status-badge" id="detailStatus">â€”</span>
+        </div>
+      </div>
+      <button class="icon-button detail-close" id="closeDetailButton" type="button" aria-label="Close finding details">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </header>
+
+    <div class="detail-body">
+      <section aria-labelledby="technical-context-heading">
+        <h3 id="technical-context-heading">Technical Context</h3>
+        <dl class="technical-context" id="technicalContext"></dl>
+      </section>
+
+      <section class="detail-explanation" aria-labelledby="explanation-heading">
+        <h3 id="explanation-heading">Explanation</h3>
+        <div class="explanation-grid">
+          <div><h4>What was observed</h4><p id="detailObserved"></p></div>
+          <div><h4>Why this may be risky</h4><p id="detailRisk"></p></div>
+          <div><h4>Possible impact</h4><p id="detailImpact"></p></div>
+          <div><h4>Verification note</h4><p id="detailVerification"></p></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="evidence-heading">
+        <h3 id="evidence-heading">Sanitised Evidence</h3>
+        <dl class="evidence-metadata" id="evidenceMetadata"></dl>
+        <pre class="response-excerpt" id="responseExcerpt"></pre>
+        <p class="evidence-note">Credentials, cookies, sensitive headers and probe values are excluded from this view.</p>
+      </section>
+    </div>
+
+    <footer class="detail-actions">
+      <button class="secondary-button" id="markReviewedButton" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
+        <span id="markReviewedLabel">Mark as Reviewed</span>
+      </button>
+      <button class="secondary-button" id="copyFindingButton" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+        Copy Finding
+      </button>
+      <button class="primary-action-button" id="downloadFindingButton" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
+        Download Finding JSON
+      </button>
+    </footer>
+  </aside>
+
+  <div class="app-toast" id="appToast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
